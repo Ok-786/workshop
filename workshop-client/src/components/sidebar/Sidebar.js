@@ -56,10 +56,17 @@ const Sidebar = (props) => {
             return (
                 <div >
                     <List className={classes.sidebarList}>
-                        {['Add Products', 'Manage Products'].map((text, index) => (
-                            <ListItem button className={classes.dropDownPanel} key={text}>
-                                <ListItemText primary={text} />
-                            </ListItem>
+                        {['Add New', 'Manage Staff'].map((text, index) => (
+                            (text === "Add New") ?
+                                <ListItem button onClick={() => {
+                                    props.displayHandler("Add Staff");
+                                }} className={classes.dropDownPanel} key={text}>
+                                    <ListItemText primary={text} />
+                                </ListItem>
+                                :
+                                <ListItem button className={classes.dropDownPanel} key={text}>
+                                    <ListItemText primary={text} />
+                                </ListItem>
                         ))}
 
                     </List>
@@ -90,18 +97,33 @@ const Sidebar = (props) => {
             return (
                 <div >
                     <List className={classes.sidebarList}>
-                        {['Add New', 'All Product', 'Orders', 'Analytics', 'Reports'].map((text, index) => (
-                            (text === "Add New") ?
-                                <ListItem button onClick={() => {
-                                    props.displayHandler("Add Product");
-                                }} className={classes.dropDownPanel} key={text}>
-                                    <ListItemText primary={text} />
-                                </ListItem>
-                                :
-                                <ListItem button className={classes.dropDownPanel} key={text}>
-                                    <ListItemText primary={text} />
-                                </ListItem>
-                        ))}
+                        {['Add New', 'All Products', 'Orders', 'Analytics', 'Reports'].map((text, index) => {
+                            switch (text) {
+                                case "Add New":
+                                    return (
+                                        <ListItem button onClick={() => {
+                                            props.displayHandler("Add Product");
+                                        }} className={classes.dropDownPanel} key={text}>
+                                            <ListItemText primary={text} />
+                                        </ListItem>
+                                    )
+                                case "All Products":
+                                    return (
+                                        <ListItem button onClick={() => {
+                                            props.displayHandler("All Products");
+                                        }} className={classes.dropDownPanel} key={text}>
+                                            <ListItemText primary={text} />
+                                        </ListItem>
+                                    )
+
+                                default:
+                                    return (
+                                        <ListItem button className={classes.dropDownPanel} key={text}>
+                                            <ListItemText primary={text} />
+                                        </ListItem>
+                                    )
+                            }
+                        })}
 
                     </List>
                 </div>
@@ -140,7 +162,9 @@ const Sidebar = (props) => {
                             </h3> */}
                             <List className={classes.sidebarList}>
                                 {['Profile'].map((text, index) => (
-                                    <ListItem button onClick={openProfileHandler} className={classes.sidebarListItem} key={text}>
+                                    <ListItem button className={classes.sidebarListItem} key={text} onClick={() => {
+                                        props.displayHandler("Profile");
+                                    }}>
                                         <ListItemIcon >
                                             {index === 1 ? <Assistant className={classes.sidebarIcon} /> : <div></div>}
                                             {index === 0 ? <AccountCircle className={classes.sidebarIcon} /> : <div></div>}

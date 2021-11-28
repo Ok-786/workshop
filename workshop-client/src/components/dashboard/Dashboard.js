@@ -6,6 +6,9 @@ import Sidebar from "../sidebar/Sidebar";
 import { Grid, MuiThemeProvider } from '@material-ui/core';
 import AddProduct from './AddProduct';
 import Home from './Home';
+import Profile from './Profile';
+import AddStaff from './AddStaff';
+import AllProducts from './AllProducts';
 // import dashboardStyles from './DashboardStyles';
 
 const Dashboard = (props) => {
@@ -43,6 +46,9 @@ const Dashboard = (props) => {
                     {(display === 'Store') && <StorePage />}
                     {(display === 'Home') && <Home />}
                     {(display === 'Add Product') && <div className={classes.centerDiv} ><AddProduct /></div>}
+                    {(display === 'All Products') && <div className={classes.centerDiv} ><AllProducts /></div>}
+                    {(display === 'Profile') && <div className={classes.centerDiv} ><Profile /></div>}
+                    {(display === 'Add Staff') && <div className={classes.centerDiv} ><AddStaff /></div>}
                 </Fragment>
             )
         }
@@ -57,9 +63,14 @@ const Dashboard = (props) => {
                         </Grid>
 
                         <Grid item sm={12} xs={12} md={9} lg={9} xl={10} >
-                            {(display === 'Store') && <StorePage />}
-                            {(display === 'Home') && <Home />}
-                            {(display === 'Add Product') && <div className={classes.centerDiv} ><AddProduct /></div>}
+                            <div className={classes.centerDiv} >
+                                {(display === 'Store') && <StorePage />}
+                                {(display === 'Home') && <Home />}
+                                {(display === 'Add Product') && <AddProduct />}
+                                {(display === 'All Products') && <AllProducts />}
+                                {(display === 'Profile') && <Profile />}
+                                {(display === 'Add Staff') && <AddStaff />}
+                            </div>
                         </Grid>
                     </MuiThemeProvider>
                 </Grid>
@@ -68,8 +79,14 @@ const Dashboard = (props) => {
         else {
             return (
                 <Fragment>
-                    {(display === 'Home') && <StorePage />}
-                    {(display === 'Add Product') && <div className={classes.centerDiv} ><AddProduct /></div>}
+                    <div className={classes.centerDiv} >
+                        {(display === 'Store') && <StorePage />}
+                        {(display === 'Add Product') && <AddProduct />}
+                        {(display === 'All Products') && <AllProducts />}
+                        {(display === 'Home') && <Home />}
+                        {(display === 'Profile') && <Profile />}
+                        {(display === 'Add Staff') && <AddStaff />}
+                    </div>
                 </Fragment>
             )
         }
@@ -81,7 +98,7 @@ const Dashboard = (props) => {
             <div className={classes.topContainer}>
                 <Topbar isOpenHandler={isOpenHandler} isLoggedout={props.isLoggedout} isLoggedin={props.isLoggedin} isOpen={isOpen} />
                 <div className={classes.container}>
-                    {props.userType !== 'admin' ? adminDisp() : clientDisp()}
+                    {adminDisp()}
                 </div>
             </div>
         </Fragment>

@@ -1,5 +1,5 @@
 import { createTheme, makeStyles } from "@material-ui/core";
-
+import Image from '../../images/home.jpg'
 const values = {
     xs: 500,
     sm: 806,
@@ -24,6 +24,24 @@ const theme = createTheme({
 });
 
 const DashboardStyles = makeStyles(theme => ({
+    home: {
+        backgroundImage: `url(${Image})`,
+        backgroundSize: 'cover',
+        width:'50vh',
+        height: '50vh',
+    },
+    form: {
+        padding: '10vh',
+        marginInline: '20%'
+    },
+    innerForm: {
+        marginBlock: '.5vh',
+    },
+
+    innerFormDate: {
+        marginBlock: '.5vh',
+    },
+
     topContainer: {
         marginTop: '0px',
     },
@@ -105,7 +123,7 @@ const DashboardStyles = makeStyles(theme => ({
 
     chart1: {
         justifyContent: "center",
-        alignItems:"center",
+        alignItems: "center",
         textAlign: "center",
         marginTop: '40px',
         // display: 'table',
@@ -118,7 +136,7 @@ const DashboardStyles = makeStyles(theme => ({
     },
     chart2: {
         justifyContent: "center",
-        alignItems:"center",
+        alignItems: "center",
         textAlign: "center",
         marginTop: '40px',
         // display: 'table',
@@ -144,7 +162,7 @@ const DashboardStyles = makeStyles(theme => ({
     },
 
     widgetsm: {
-        marginBlockStart:"40px",
+        marginBlockStart: "40px",
         backgroundColor: 'white',
         boxShadow: '1px 0px 12px 0px rgba(0,0,0,0.25)',
         padding: '20px',

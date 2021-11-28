@@ -1,13 +1,18 @@
-const Pool = require('pg').Pool;
-require('dotenv').config();
+const mongoose = require('mongoose');
 
-const pool = new Pool({
-    user: process.env.USER,
-    password: process.env.PASSWORD,
-    host: process.env.HOST,
-    port: process.env.DBPORT,
-    database: process.env.DATABASE
-});
-pool ? console.log(`Db is connected..${process.env.DATABASE}`) : console.log('Error when connecteing to db...');
+async function connect() {
+    // const url = 'mongodb://cluster0.txsjl.mongodb.net:27017';
+    
+    const url = 'mongodb+srv://osama:ojRmRWCtVL1M1ahd@cluster0.txsjl.mongodb.net/workshop?authSource=admin&replicaSet=atlas-vbzzgl-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true';
+    try {
+        const connection = await mongoose.connect(url
+        , { useNewUrlParser: true, useUnifiedTopology: true }
+        );
+        console.log("connected to db.....")
+    }
+    catch(err) {
+        console.log("error when connecting db....")
+    }
+}
 
-module.exports = pool;
+module.exports = connect;

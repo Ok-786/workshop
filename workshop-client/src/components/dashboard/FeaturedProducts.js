@@ -18,8 +18,10 @@ export default function FeaturedProducts(props) {
         const apiCall = async () => {
             const response = await fetch("http://localhost:8000/api/auth/products/");
             const parseRes = await response.json();
-            setRows(parseRes);
-            console.log('aaaaaa'+rows);
+            if (parseRes) {
+                setRows(parseRes);
+            }
+            console.log('aaaaaa' + parseRes);
         }
         apiCall();
     }, [])
@@ -40,15 +42,14 @@ export default function FeaturedProducts(props) {
                         </TableRow>
                     </TableHead>
                     <TableBody >
-                                {console.log(rows)}
                         {rows.map((row, index) => (
-                            <TableRow key={row.id} id={row.id}>
-                                {console.log('asd'+rows[index])}
+                            <TableRow key={row.product_id} id={row.id}>
+                                {console.log('asd' + rows[index])}
                                 <TableCell width="1%" align="left" ><img id={`img${row.product_id}`} src={image1} alt={`pic of ${row.name}`} style={{ width: 60 }} /></TableCell>
                                 <TableCell width="1%" align="left" id={`fn${row.product_id}`}>{row.name}</TableCell>
                                 <TableCell width="1%" align="left" id={`fn${row.product_id}`}>{row.type}</TableCell>
                                 <TableCell width="1%" align="left" id={`fn${row.product_id}`}>{row.quantity}</TableCell>
-                                <TableCell width="1%" align="left" id={`fn${row.product_id}`}>{row.regularprice}</TableCell>
+                                <TableCell width="1%" align="left" id={`fn${row.product_id}`}>{row.retailprice}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

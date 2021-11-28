@@ -17,8 +17,10 @@ import { theme } from "./DashboardStyles";
 import Spinner from "../spinner/Spinner";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
+import ImageUpload from "./ImageUpload";
 
 export default function AddProduct() {
+  const [input, inputHandler] = useState();
   return (
     <Fragment>
       <MuiThemeProvider theme={theme}>
@@ -60,9 +62,9 @@ export default function AddProduct() {
               }}
             >
               <FormikStep
-                label="General"
+                label="Product Information"
                 validationSchema={object({
-                  productName: Yup.string()
+                  name: Yup.string()
                     .min(2, "Too Short!")
                     .max(50, "Too Long!")
                     .required("Required"),
@@ -74,18 +76,17 @@ export default function AddProduct() {
                     .min(2, "Too Short!")
                     .max(50, "Too Long!")
                     .required("Required"),
-                  regularPrice: Yup.number().required("Required"),
-                  salePrice: Yup.number().required("Required"),
-                  color: Yup.string()
-                    .min(2, "Too Short!")
-                    .max(50, "Too Long!")
+                  saleprice: Yup.number().required("Required"),
+                  retailprice: Yup.number().required("Required"),
+                  part_ID: Yup.string()
+                    .max(255, "Too Long!")
                     .required("Required"),
                 })}
               >
                 <Box paddingBottom={3}>
                   <Field
                     style={{ width: "49%", marginInlineEnd: "1%" }}
-                    name="productName"
+                    name="name"
                     component={TextField}
                     label="Title"
                   />
@@ -105,36 +106,36 @@ export default function AddProduct() {
                   />
                   <Field
                     style={{ width: "49%", marginInlineStart: "1%" }}
-                    name="color"
+                    name="part_ID"
                     component={TextField}
-                    label="Color"
+                    label="Part ID"
                   />
                 </Box>
                 <Box paddingBottom={2}>
                   <Field
                     style={{ width: "49%", marginInlineEnd: "1%" }}
-                    name="regularPrice"
+                    name="saleprice"
                     type="number"
                     component={TextField}
-                    label="Standard Price(PKR)"
+                    label="Sale %"
                   />
                   <Field
                     style={{ width: "49%", marginInlineStart: "1%" }}
-                    name="salePrice"
+                    name="retailprice"
                     type="number"
                     component={TextField}
-                    label="Sale Price(PKR)"
+                    label="Retail Price(PKR)"
                   />
                 </Box>
               </FormikStep>
               <FormikStep
-                label="Inventory"
+                label="Car information"
                 validationSchema={object({
                   quantity: Yup.number().required("Required"),
                   quality: Yup.string().required("Required"),
-                  length: Yup.number().required("Required"),
-                  height: Yup.number().required("Required"),
-                  width: Yup.number().required("Required"),
+                  make: Yup.string().required("Required"),
+                  model: Yup.string().required("Required"),
+                  modelYear: Yup.string().required("Required"),
                   weight: Yup.number().required("Required"),
                 })}
               >
@@ -156,33 +157,30 @@ export default function AddProduct() {
                 <Box paddingBottom={2}>
                   <Field
                     style={{ width: "49%", marginInlineEnd: "1%" }}
-                    name="length"
-                    type="number"
+                    name="make"
                     component={TextField}
-                    label="length(cm)"
+                    label="Make"
                   />
                   <Field
                     style={{ width: "49%", marginInlineEnd: "1%" }}
-                    name="height"
-                    type="number"
+                    name="model"
                     component={TextField}
-                    label="Height(cm)"
+                    label="Model"
                   />
                 </Box>
                 <Box paddingBottom={2}>
                   <Field
                     style={{ width: "49%", marginInlineEnd: "1%" }}
-                    name="width"
-                    type="number"
+                    name="modelYear"
                     component={TextField}
-                    label="Width(cm)"
+                    label="Model Year"
                   />
                   <Field
                     style={{ width: "49%", marginInlineEnd: "1%" }}
                     name="weight"
                     type="number"
                     component={TextField}
-                    label="Weight(cm)"
+                    label="Weight(kg)"
                   />
                 </Box>
               </FormikStep>
@@ -193,6 +191,12 @@ export default function AddProduct() {
                 })}
               >
                 <Box paddingBottom={2}>
+                  {/* <ImageUpload
+                    center
+                    id="image"
+                    onInput={inputHandler}
+                    errorText="Please provide an image."
+                  /> */}
                   <Field
                     style={{ width: "80%", marginInlineEnd: "1%" }}
                     multiline={true}
@@ -245,8 +249,8 @@ export function FormikStepper({
           await props.onSubmit(values, helpers);
           await setTimeout(() => {
             setIsLoading(false);
-            helpers.resetForm();
-            setStep(0);
+            // helpers.resetForm();
+            // setStep(0);
           }, 4000);
         } else {
           setStep((s) => s + 1);

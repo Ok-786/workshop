@@ -30,7 +30,7 @@ export default function AdminHome() {
                     <Grid item sm={12} xm={12} xl={6} lg={6} md={12}>
                         {<FeaturedProducts />}
                     </Grid>
-                    <Grid item sm={6}>
+                    <Grid item sm={12} xm={12} xl={6} lg={6} md={12}>
                         {<NewUsers />}
                     </Grid>
                 </Grid>
