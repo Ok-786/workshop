@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -18,22 +18,29 @@ const useStyles = makeStyles({
     }
 });
 
-const food = [
-    { name: "Pizza",img:"", calories: 200, fat: 6.0, carbs: 24, protein: 4.0 },
-    { name: "Hot Dog",img:"", calories: 300, fat: 6.0, carbs: 24, protein: 4.0 },
-    { name: "Burger",img:"", calories: 400, fat: 6.0, carbs: 24, protein: 4.0 },
-    { name: "Hamburger",img:"", calories: 500, fat: 6.0, carbs: 24, protein: 4.0 },
-    { name: "Fries",img:"", calories: 600, fat: 6.0, carbs: 24, protein: 4.0 },
-    { name: "Ice Cream",img:"", calories: 700, fat: 6.0, carbs: 24, protein: 4.0 }
-];
 
 export default function AllProducts() {
-    const [rows, setRows] = useState (food);
-    const [searched, setSearched] = useState ("");
+    const [rows, setRows] = useState([]);
+    useEffect(() => {
+        async function callApi() {
+            const response = await fetch('http://localhost:8000/api/auth/products/',{
+                headers: { token: localStorage.token }
+            });
+
+            const parseRes = await response.json();
+            console.log(parseRes.products)
+            setRows(parseRes.products);
+
+        }
+
+        callApi();
+    }, [])
+
+    const [searched, setSearched] = useState("");
     const classes = useStyles();
 
     const requestSearch = (searchedVal) => {
-        const filteredRows = food.filter((row) => {
+        const filteredRows = rows.filter((row) => {
             return row.name.toLowerCase().includes(searchedVal.toLowerCase());
         });
         setRows(filteredRows);
@@ -45,38 +52,38 @@ export default function AllProducts() {
     };
 
     return (
-            <Paper>
-                <SearchBar
-                    value={searched}
-                    onChange={(searchVal) => requestSearch(searchVal)}
-                    onCancelSearch={() => cancelSearch()}
-                />
-                <TableContainer>
-                    <Table className={classes.table} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Products</TableCell>
-                                <TableCell align="left">Product Name</TableCell>
-                                <TableCell align="left">Quantity</TableCell>
-                                <TableCell align="left">Type</TableCell>
-                                <TableCell align="left">Price</TableCell>
+        <Paper>
+            <SearchBar
+                value={searched}
+                onChange={(searchVal) => requestSearch(searchVal)}
+                onCancelSearch={() => cancelSearch()}
+            />
+            <TableContainer>
+                <Table className={classes.table} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Products</TableCell>
+                            <TableCell align="left">Product Name</TableCell>
+                            <TableCell align="left">Quantity</TableCell>
+                            <TableCell align="left">Type</TableCell>
+                            <TableCell align="left">Price</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {rows.map((row) => (
+                            <TableRow key={row.name}>
+                                <TableCell component="th" scope="row">
+                                    <img id={`img${row.name}`} src={`http://localhost:8000/${row.image}`} alt={`pic of ${row.name}`} style={{ width: 60 }} />
+                                </TableCell>
+                                <TableCell align="left">{row.name}</TableCell>
+                                <TableCell align="left">{row.quantity}</TableCell>
+                                <TableCell align="left">{row.type}</TableCell>
+                                <TableCell align="left">{row.saleprice}</TableCell>
                             </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {rows.map((row) => (
-                                <TableRow key={row.name}>
-                                    <TableCell component="th" scope="row">
-                                    <img id={`img${row.name}`} src={image1} alt={`pic of ${row.name}`} style={{ width: 60 }} />
-                                    </TableCell>
-                                    <TableCell align="left">{row.name}</TableCell>
-                                    <TableCell align="left">{row.calories}</TableCell>
-                                    <TableCell align="left">{row.fat}</TableCell>
-                                    <TableCell align="left">{row.carbs}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </Paper>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </Paper>
     );
 }

@@ -4,7 +4,7 @@ import Topbar from "../navbar/Topbar";
 import StorePage from './StorePage';
 import Sidebar from "../sidebar/Sidebar";
 import { Grid, MuiThemeProvider } from '@material-ui/core';
-import AddProduct from './AddProduct';
+import AddProduct from './AddProduct1';
 import Home from './Home';
 import Profile from './Profile';
 import AddStaff from './AddStaff';

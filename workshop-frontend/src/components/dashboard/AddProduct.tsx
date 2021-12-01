@@ -21,6 +21,7 @@ import ImageUpload from "./ImageUpload";
 
 export default function AddProduct() {
   const [input, inputHandler] = useState();
+
   return (
     <Fragment>
       <MuiThemeProvider theme={theme}>
@@ -36,29 +37,33 @@ export default function AddProduct() {
               initialValues={{}}
               onSubmit={async (values) => {
                 console.log("1");
-                const response = await fetch(
-                  "http://localhost:8000/api/auth/products/create",
-                  {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                      token: localStorage.token,
-                    },
-                    body: JSON.stringify(values),
-                  }
-                );
+                // const response = await fetch(
+                //   "http://localhost:8000/api/auth/products/create",
+                //   {
+                //     method: "POST",
+                //     headers: {
+                //       "Content-Type": "application/json",
+                //       token: localStorage.token,
+                //     },
+                //     body: JSON.stringify(values),
+                //   }
+                // );
 
-                const parseRes = await response.json();
+                // const parseRes = await response.json();
 
-                console.log("asd");
-                console.log(parseRes);
-                setTimeout(function () {
-                  if (parseRes.p) {
-                    toast.success(parseRes.p);
-                  } else {
-                    toast.error(parseRes);
-                  }
-                }, 3000);
+                // console.log("asd");
+                // console.log(parseRes);
+                // setTimeout(function () {
+                //   if (parseRes.p) {
+                //     toast.success(parseRes.p);
+                //   } else {
+                //     toast.error(parseRes);
+                //   }
+                // }, 3000);
+                console.log(values);
+                console.log("sds")
+                console.log(values.file);
+                console.log(values.file.name);
               }}
             >
               <FormikStep
@@ -187,16 +192,33 @@ export default function AddProduct() {
               <FormikStep
                 label="More Info"
                 validationSchema={object({
+                    // file: Yup.object().shape({
+                    // name: Yup.string()
+                  // }).label('file'),
                   description: Yup.string().required("Required"),
                 })}
               >
                 <Box paddingBottom={2}>
-                  <ImageUpload
-                    center
-                    id="image"
-                    onInput={inputHandler}
-                    errorText="Please provide an image."
+                  <input
+                    accept="image/*"
+                    name="file"
+                    // className={classes.input}
+                    // style={{ display: "none" }}
+                    id="raised-button-file"
+                    multiple
+                    type="file"
                   />
+                  <label htmlFor="raised-button-file">
+                    <Button
+                      variant="contained"
+                      component="span"
+                      // className={classes.button}
+                    >
+                      Upload Image
+                    </Button>
+                  </label>
+                </Box>
+                <Box>
                   <Field
                     style={{ width: "80%", marginInlineEnd: "1%" }}
                     multiline={true}
@@ -258,7 +280,7 @@ export function FormikStepper({
       }}
     >
       <Form autoComplete="off">
-        <Spinner loading={isLoading} />
+        {/* <Spinner loading={isLoading} /> */}
         <Stepper activeStep={step} alternativeLabel>
           {childrenArray.map((child) => (
             <Step key={child.props.label}>

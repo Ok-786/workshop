@@ -135,37 +135,47 @@ module.exports.createAdmin = async (req, res) => {
 
 
 module.exports.addProduct = async (req, res) => {
-    const { error } = validateProduct(req.body);
-    if (error) {
-        var e = "";
-        error.details.forEach(element => {
-            e = e + " " + element.message;
-        });
+    // const { error } = validateProduct(req.body);
+    // if (error) {
+    //     var e = "";
+    //     error.details.forEach(element => {
+    //         e = e + " " + element.message;
+    //     });
 
-        return res.status(400).json(e);
-    }
+    //     return res.status(400).json(e);
+    // }
 
-    const { name, type, brand, retailprice, saleprice, quantity, model, modelYear, part_ID, weight, make, quality, description } = req.body;
-
+    const { name, type, brand, retailprice, saleprice, quantity, model, modelYear, part_ID,  make,  description } = req.body;
+    console.log(req.file+'sdadadadadadadsadadad');
     let product = new Product({
-        name, type, brand, retailprice, saleprice, quantity, model, modelYear, part_ID, weight, make, quality, description
-    });
+        name,
+        type,
+        brand,
+        retailprice,
+        saleprice,
+        quantity,
+        model,
+        modelYear,
+        part_ID,
+        make,
+        image: req.file.path,
+        description
+    })
+    
+    var user;
+    var id = req.user.id;
+console.log(id)
     try {
-        await product.save();
+        user = await User.findById(id);
+        console.log(user)
     } catch (error) {
-        return res.status(500).json(error.message);
-    }
-    let user;
-    try {
-        user = await User.findById(req.user.id);
-    } catch (error) {
-        return res.status(500).json(error.message);
+        return res.status(500).json(error.message)
     }
 
     if (!user) {
-        return res.status(500).json(error.message);
+        return res.status(500).json('User not foundaaa!')
     }
-
+    
     try {
         const sess = await mongoose.startSession();
         sess.startTransaction();
@@ -183,14 +193,51 @@ module.exports.addProduct = async (req, res) => {
     // } catch (err) {
     //     return res.status(500).json(err.message)
     // }
-    return res.json({ p: "Product Added" });
+    return res.json("Product Added");
+    // let product = new Product({
+    //     name, type, brand, retailprice, saleprice, quantity, model, modelYear, part_ID, weight, make, quality, description
+    // });
+    // try {
+    //     await product.save();
+    // } catch (error) {
+    //     return res.status(500).json(error.message);
+    // }
+    // let user;
+    // try {
+    //     user = await User.findById(req.user.id);
+    // } catch (error) {
+    //     return res.status(500).json(error.message);
+    // }
+
+    // if (!user) {
+    //     return res.status(500).json(error.message);
+    // }
+
+    // try {
+    //     const sess = await mongoose.startSession();
+    //     sess.startTransaction();
+    //     await product.save({ session: sess });
+    //     user.products.push(product); //this push is the method of mongoose not array, it takes the id from the place and stores it in user
+    //     await user.save({ session: sess });
+    //     await sess.commitTransaction();
+    // } catch (error) {
+    //     return res.status(500).json(error.message);
+    // }
+
+    // // try {
+    // //     const product = await pool.query("INSERT INTO products(admin_id, name, type, brand, regularPrice, salePrice, quantity, length, height, width, weight, color, quality, description) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *", [req.user.id, productName, type, brand, regularPrice, salePrice, quantity, length, height, width, weight, color, quality, description]);
+
+    // // } catch (err) {
+    // //     return res.status(500).json(err.message)
+    // // }
+    // return res.json({ p: "Product Added" });
 };
 
 module.exports.getProducts = async (req, res) => {
     var products;
     try {
-        products = await Product.find();
-        return res.json(products);
+        userWithProducts = await User.findById(req.user.id).populate('products');
+        return res.json({ products: userWithProducts.products.map(product => product.toObject({ getters: true })) });
     } catch (err) {
         return res.status(500).json(err.message);
     }

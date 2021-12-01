@@ -43,7 +43,10 @@ const productSchema = new mongoose.Schema({
     creator: {
         type: mongoose.Types.ObjectId,
         ref: 'users'
-    }
+    },
+    image: {
+        type: String,
+    },
 });
 
 module.exports = mongoose.model('products', productSchema);

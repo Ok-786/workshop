@@ -16,10 +16,12 @@ export default function FeaturedProducts(props) {
 
     useEffect(() => {
         const apiCall = async () => {
-            const response = await fetch("http://localhost:8000/api/auth/products/");
+            const response = await fetch("http://localhost:8000/api/auth/products/", {
+                headers: {token: localStorage.token}
+            });
             const parseRes = await response.json();
             if (parseRes) {
-                setRows(parseRes);
+                setRows(parseRes.products);
             }
             console.log('aaaaaa' + parseRes);
         }
@@ -43,13 +45,13 @@ export default function FeaturedProducts(props) {
                     </TableHead>
                     <TableBody >
                         {rows.map((row, index) => (
-                            <TableRow key={row.product_id} id={row.id}>
+                            <TableRow key={row.id} id={row.id}>
                                 {console.log('asd' + rows[index])}
-                                <TableCell width="1%" align="left" ><img id={`img${row.product_id}`} src={image1} alt={`pic of ${row.name}`} style={{ width: 60 }} /></TableCell>
-                                <TableCell width="1%" align="left" id={`fn${row.product_id}`}>{row.name}</TableCell>
-                                <TableCell width="1%" align="left" id={`fn${row.product_id}`}>{row.type}</TableCell>
-                                <TableCell width="1%" align="left" id={`fn${row.product_id}`}>{row.quantity}</TableCell>
-                                <TableCell width="1%" align="left" id={`fn${row.product_id}`}>{row.retailprice}</TableCell>
+                                <TableCell width="1%" align="left" ><img id={`img${row.id}`} src={`http://localhost:8000/${row.image}`} alt={`pic of ${row.name}`} style={{ width: 60 }} /></TableCell>
+                                <TableCell width="1%" align="left" id={`fn${row.id}`}>{row.name}</TableCell>
+                                <TableCell width="1%" align="left" id={`fn${row.id}`}>{row.type}</TableCell>
+                                <TableCell width="1%" align="left" id={`fn${row.id}`}>{row.quantity}</TableCell>
+                                <TableCell width="1%" align="left" id={`fn${row.id}`}>{row.retailprice}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

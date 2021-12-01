@@ -36,6 +36,7 @@ const DashboardStyles = makeStyles(theme => ({
     },
     innerForm: {
         marginBlock: '.5vh',
+        marginInline: '.5%'
     },
 
     innerFormDate: {
