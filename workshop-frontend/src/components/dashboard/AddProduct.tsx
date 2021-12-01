@@ -198,26 +198,6 @@ export default function AddProduct() {
                   description: Yup.string().required("Required"),
                 })}
               >
-                <Box paddingBottom={2}>
-                  <input
-                    accept="image/*"
-                    name="file"
-                    // className={classes.input}
-                    // style={{ display: "none" }}
-                    id="raised-button-file"
-                    multiple
-                    type="file"
-                  />
-                  <label htmlFor="raised-button-file">
-                    <Button
-                      variant="contained"
-                      component="span"
-                      // className={classes.button}
-                    >
-                      Upload Image
-                    </Button>
-                  </label>
-                </Box>
                 <Box>
                   <Field
                     style={{ width: "80%", marginInlineEnd: "1%" }}

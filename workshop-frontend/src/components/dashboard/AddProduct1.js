@@ -9,9 +9,12 @@ import DatePicker from '@mui/lab/DatePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { Box } from '@mui/system';
 import ImageUpload from './ImageUpload';
+import Spinner from '../spinner/Spinner';
 
 
 export default function AddProduct1() {
+    const [isLoading, setIsLoading] = useState(false);
+    
     const handleFileUpload = (event) => {
         let reader = new FileReader();
         let file = event.target.files[0];
@@ -54,6 +57,9 @@ export default function AddProduct1() {
         make: yup
             .string('Enter Make')
             .required('part_ID is required'),
+        details: yup
+            .string('Enter details')
+            .required('details is required'),
     });
 
     const classes = ClientWorkoutInfoStyles();
@@ -69,7 +75,8 @@ export default function AddProduct1() {
             quantity: '',
             model: '',
             modelYear: '',
-            make: ''
+            make: '',
+            details: ''
         },
         validationSchema: validationSchema,
         onSubmit: async (values) => {
@@ -85,20 +92,27 @@ export default function AddProduct1() {
                 formData.append('model', values.model);
                 formData.append('modelYear', values.modelYear);
                 formData.append('make', values.make);
+                formData.append('details', values.details);
                 formData.append('file', image);
                 console.log(formData);
                 console.log(image);
 
+                setIsLoading(true);
+                
                 const response = await fetch('http://localhost:8000/api/auth/products/create', {
                     method: 'POST',
                     headers: { token: localStorage.token },
-                    body:formData
+                    body: formData
                 });
 
                 const parseRes = await response.json();
                 console.log(parseRes);
                 console.log('im in')
 
+                setIsLoading(false);
+                
+            formik.resetForm();
+                
             } catch (error) {
                 console.log(error);
             }
@@ -107,11 +121,13 @@ export default function AddProduct1() {
 
     return (
         <div className={classes.form}>
+        <Spinner loading={isLoading} />
+            <h2 className={classes.centerDiv}>Add Product</h2>
             <form onSubmit={formik.handleSubmit}>
 
                 <TextField
                     className={classes.innerForm}
-                    style={{width:'49%'}}
+                    style={{ width: '49%' }}
                     id="name"
                     name="name"
                     label="Product Name"
@@ -123,7 +139,7 @@ export default function AddProduct1() {
                 />
                 <TextField
                     className={classes.innerForm}
-                    style={{width:'49%'}}
+                    style={{ width: '49%' }}
                     id="type"
                     name="type"
                     label="Type"
@@ -136,7 +152,7 @@ export default function AddProduct1() {
                 />
                 <TextField
                     className={classes.innerForm}
-                    style={{width:'49%'}}
+                    style={{ width: '49%' }}
                     id="brand"
                     name="brand"
                     label="Brand"
@@ -148,7 +164,7 @@ export default function AddProduct1() {
                 />
                 <TextField
                     className={classes.innerForm}
-                    style={{width:'49%'}}
+                    style={{ width: '49%' }}
                     id="part_ID"
                     name="part_ID"
                     label="part_ID"
@@ -160,7 +176,7 @@ export default function AddProduct1() {
                 />
                 <TextField
                     className={classes.innerForm}
-                    style={{width:'49%'}}
+                    style={{ width: '49%' }}
                     id="saleprice"
                     name="saleprice"
                     type="number"
@@ -173,7 +189,7 @@ export default function AddProduct1() {
                 />
                 <TextField
                     className={classes.innerForm}
-                    style={{width:'49%'}}
+                    style={{ width: '49%' }}
                     id="retailprice"
                     name="retailprice"
                     label="Retail Price"
@@ -186,7 +202,7 @@ export default function AddProduct1() {
                 />
                 <TextField
                     className={classes.innerForm}
-                    style={{width:'49%'}}
+                    style={{ width: '49%' }}
                     id="quantity"
                     name="quantity"
                     label="Quantity"
@@ -199,7 +215,7 @@ export default function AddProduct1() {
                 />
                 <TextField
                     className={classes.innerForm}
-                    style={{width:'49%'}}
+                    style={{ width: '49%' }}
                     id="make"
                     name="make"
                     label="Make"
@@ -211,7 +227,7 @@ export default function AddProduct1() {
                 />
                 <TextField
                     className={classes.innerForm}
-                    style={{width:'49%'}}
+                    style={{ width: '49%' }}
                     id="model"
                     name="model"
                     label="Model"
@@ -221,6 +237,7 @@ export default function AddProduct1() {
                     error={formik.touched.model && Boolean(formik.errors.model)}
                     helperText={formik.touched.model && formik.errors.model}
                 />
+
                 {/* <Box paddingBottom={2}>
                     <input
                         accept="image/*"
@@ -244,10 +261,10 @@ export default function AddProduct1() {
                         </Button>
                     </label>
                 </Box> */}
-                
+
                 <TextField
                     className={classes.innerForm}
-                    style={{width:'49%'}}
+                    style={{ width: '49%' }}
                     id="modelYear"
                     name="modelYear"
                     label="Model Year"
@@ -257,6 +274,23 @@ export default function AddProduct1() {
                     error={formik.touched.modelYear && Boolean(formik.errors.modelYear)}
                     helperText={formik.touched.modelYear && formik.errors.modelYear}
                 />
+
+                <TextField
+                    className={classes.innerForm}
+                    // style={{ width: "80%", marginInlineEnd: "1%" }}
+                    multiline={true}
+                    rows={10}
+                    fullWidth
+                    id="details"
+                    name="details"
+                    label="Details"
+                    variant="outlined"
+                    value={formik.values.details}
+                    onChange={formik.handleChange}
+                    error={formik.touched.details && Boolean(formik.errors.details)}
+                    helperText={formik.touched.details && formik.errors.details}
+                />
+
                 <ImageUpload center id="file" name="file" onInput={setImage} errorText="Please provide an image." />
                 {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DatePicker

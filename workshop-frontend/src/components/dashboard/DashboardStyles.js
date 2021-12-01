@@ -31,7 +31,7 @@ const DashboardStyles = makeStyles(theme => ({
         height: '50vh',
     },
     form: {
-        padding: '10vh',
+        padding: '6vh',
         marginInline: '20%'
     },
     innerForm: {
@@ -58,7 +58,6 @@ const DashboardStyles = makeStyles(theme => ({
 
     centerDiv: {
         alignItems: 'center',
-        textAlign: 'center',
         justifyContent: 'center',
         display: 'flex',
         width: '100%',

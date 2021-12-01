@@ -7,7 +7,8 @@ import TextField from '@material-ui/core/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
-
+import './AddStaff.css';
+import ImageUpload from './ImageUpload';
 
 export default function AddStaff() {
     const validationSchema = yup.object({
@@ -36,7 +37,7 @@ export default function AddStaff() {
     });
 
     const classes = ClientWorkoutInfoStyles();
-    const [date, setDate] = useState(new Date());
+    const [image, setImage] = useState(new Date());
     const formik = useFormik({
         initialValues: {
             fullName: '',
@@ -53,125 +54,58 @@ export default function AddStaff() {
     });
 
     return (
-        <div className={classes.form}>
-            <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={formik.handleSubmit}>
 
-                <TextField
-                    className={classes.innerForm}
-                    fullWidth
-                    id="fullName"
-                    name="fullName"
-                    label="Full Name"
-                    variant="outlined"
-                    value={formik.values.fullName}
-                    onChange={formik.handleChange}
-                    error={formik.touched.fullName && Boolean(formik.errors.fullName)}
-                    helperText={formik.touched.fullName && formik.errors.fullName}
-                />
-                <TextField
-                    className={classes.innerForm}
-                    fullWidth
-                    id="email"
-                    name="email"
-                    label="Email"
-                    type="email"
-                    variant="outlined"
-                    value={formik.values.email}
-                    onChange={formik.handleChange}
-                    error={formik.touched.email && Boolean(formik.errors.email)}
-                    helperText={formik.touched.email && formik.errors.email}
-                />
-                <TextField
-                    className={classes.innerForm}
-                    fullWidth
-                    id="phone"
-                    name="phone"
-                    label="Phone"
-                    type="number"
-                    variant="outlined"
-                    value={formik.values.phone}
-                    onChange={formik.handleChange}
-                    error={formik.touched.phone && Boolean(formik.errors.phone)}
-                    helperText={formik.touched.phone && formik.errors.phone}
-                />
-                <TextField
-                    className={classes.innerForm}
-                    fullWidth
-                    id="address"
-                    name="address"
-                    label="Address"
-                    variant="outlined"
-                    value={formik.values.address}
-                    onChange={formik.handleChange}
-                    error={formik.touched.address && Boolean(formik.errors.address)}
-                    helperText={formik.touched.address && formik.errors.address}
-                />
-                <TextField
-                    className={classes.innerForm}
-                    fullWidth
-                    id="cnic"
-                    name="cnic"
-                    label="CNIC"
-                    variant="outlined"
-                    value={formik.values.cnic}
-                    onChange={formik.handleChange}
-                    error={formik.touched.address && Boolean(formik.errors.cnic)}
-                    helperText={formik.touched.cnic && formik.errors.cnic}
-                />
-                <TextField
-                    className={classes.innerForm}
-                    style={{ width: '49%', marginInlineEnd: '1%' }}
-                    id="expertise"
-                    name="expertise"
-                    label="Expertise"
-                    type="string"
-                    variant="outlined"
-                    value={formik.values.expertise}
-                    onChange={formik.handleChange}
-                    error={formik.touched.expertise && Boolean(formik.errors.expertise)}
-                    helperText={formik.touched.expertise && formik.errors.expertise}
-                />
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DatePicker
-                        label="Date of Birth"
-                        value={date}
-                        onChange={(newValue) => {
-                            setDate(newValue);
-                        }}
-                        renderInput={(params) => <TextField style={{ width: '49%', marginInlineStart: '1%' }} className={classes.innerFormDate} variant="outlined"  {...params} />}
-                    />
-                </LocalizationProvider>
-                {/* <TextField
-                    className={classes.innerForm}
-                    fullWidth
-                    id="calf"
-                    name="calf"
-                    label="Calf"
-                    type="number"
-                    variant="outlined"
-                    value={formik.values.calf}
-                    onChange={formik.handleChange}
-                    error={formik.touched.calf && Boolean(formik.errors.calf)}
-                    helperText={formik.touched.calf && formik.errors.calf}
-                />
-                <TextField
-                    className={classes.innerForm}
-                    fullWidth
-                    id="wrist"
-                    name="wrist"
-                    label="Wrist"
-                    type="number"
-                    variant="outlined"
-                    value={formik.values.wrist}
-                    onChange={formik.handleChange}
-                    error={formik.touched.wrist && Boolean(formik.errors.wrist)}
-                    helperText={formik.touched.wrist && formik.errors.wrist}
-                /> */}
-                <Button fullWidth style={{ marginTop: '1vh' }} color="secondary" variant="contained" type="submit">
-                    Submit
-                </Button>
-            </form>
-
-        </div>
+            <div className="container rounded bg-white mt-5 mb-5">
+                <div className="row">
+                    <div className="col-md-3 border-right">
+                        <ImageUpload center id="file" name="file" onInput={setImage} rounded={true} errorText="Please provide an image." />
+                    </div>
+                    <div className="col-md-5 border-right">
+                        <div className="p-3 py-5">
+                            <div className="d-flex justify-content-between align-items-center mb-3">
+                                <h4 className="text-right" >Create Staff Profile</h4>
+                            </div>
+                            <div className="row mt-2">
+                                <div className="col-md-6"><label className="labels" style={{ marginBlockEnd: '5px' }} >First Name</label><TextField size="small" variant="outlined" type="text" className="form-control" placeholder="First Name" value="" /></div>
+                                <div className="col-md-6"><label className="labels" style={{ marginBlockEnd: '5px' }}>Last Name</label><TextField size="small" variant="outlined" type="text" className="form-control" value="" placeholder="Last Name" /></div>
+                            </div>
+                            <div className="row mt-3">
+                                <div className="col-md-12"><label className="labels" style={{ marginBlockStart: '15px', marginBlockEnd: '5px' }}>Email</label><TextField size="small" variant="outlined" type="email" className="form-control" placeholder="Enter Email" value="" /></div>
+                                <div className="col-md-12"><label className="labels" style={{ marginBlockStart: '15px', marginBlockEnd: '5px' }}>Mobile Number</label><TextField size="small" variant="outlined" type="text" className="form-control" placeholder="Enter Phone Number" value="" /></div>
+                                <div className="col-md-12"><label className="labels" style={{ marginBlockStart: '15px', marginBlockEnd: '5px' }}>Address</label><TextField size="small" variant="outlined" type="text" className="form-control" placeholder="Enter Address" value="" /></div>
+                                <div className="col-md-12"><label className="labels" style={{ marginBlockStart: '15px', marginBlockEnd: '5px' }}>Area</label><TextField size="small" variant="outlined" type="text" className="form-control" placeholder="Enter Operational Area" value="" /></div>
+                                <div className="col-md-12"><label className="labels" style={{ marginBlockStart: '15px', marginBlockEnd: '5px' }}>ID Number</label><TextField size="small" variant="outlined" type="text" className="form-control" placeholder="Enter ID Number" value="" /></div>
+                                <div className="col-md-12"><label className="labels" style={{ marginBlockStart: '15px', marginBlockEnd: '5px' }}>Education</label><TextField size="small" variant="outlined" type="text" className="form-control" placeholder="Education" value="" /></div>
+                            </div>
+                            <div className="row mt-3">
+                                <div className="col-md-6"><label className="labels" style={{ marginBlockStart: '15px', marginBlockEnd: '5px' }}>Country</label><TextField size="small" variant="outlined" type="text" className="form-control" placeholder="country" value="" /></div>
+                                <div className="col-md-6"><label className="labels" style={{ marginBlockStart: '15px', marginBlockEnd: '5px' }}>State/Region</label><TextField size="small" variant="outlined" type="text" className="form-control" value="" placeholder="state" /></div>
+                            </div>
+                            <div className="mt-5 text-center"><Button fullWidth style={{ marginTop: '1vh' }} color="secondary" variant="contained" type="submit">Save Profile</Button></div>
+                        </div>
+                    </div>
+                    <div className="col-md-4">
+                        <div className="p-3 py-5">
+                            <div className="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><Button   color="secondary" variant="outlined" type="submit">Experience</Button></div><br />
+                            <div className="col-md-12"><label className="labels" style={{ marginBlockStart: '15px', marginBlockEnd: '5px' }}>Experience</label><TextField size="small" variant="outlined" type="text" className="form-control" placeholder="experience" value="" /></div> <br />
+                            <div className="col-md-12"><label className="labels" style={{ marginBlockStart: '15px', marginBlockEnd: '5px' }}>Skills</label><TextField size="small" variant="outlined" type="text" className="form-control" placeholder="skills" value="" /></div> <br />
+                            <div className="col-md-12"><label className="labels" style={{ marginBlockStart: '15px', marginBlockEnd: '5px' }}>Additional Details</label><TextField multiline={true} rows={15} size="small" variant="outlined" type="text" className="form-control" placeholder="Enter additional details" value="" /></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     );
 };
+
+// {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
+//                     <DatePicker
+//                         label="Date of Birth"
+//                         value={date}
+//                         onChange={(newValue) => {
+//                             setDate(newValue);
+//                         }}
+//                         renderTextField size="small"  variant="outlined"={(params) => <TextField size="small"  variant="outlined" style={{ width: '49%', marginInlineStart: '1%' }} className={classes.innerFormDate} variant="outlined"  {...params} />}
+//                     />
+//                 </LocalizationProvider> */}

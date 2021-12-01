@@ -8,7 +8,7 @@ const SpinnerStyles = makeStyles(theme => ({
         textAlign: 'center',
         // paddingTop:'40vh',
         width:'100%',
-        height:'60%',
+        height:'100%',
         position: 'absolute',
         left: '0',
         top:'0',

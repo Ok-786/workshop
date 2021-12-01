@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Dashboard from './components/dashboard/Dashboard';
 import Verify from './utils/Verify';
 import AddProduct from './components/dashboard/AddProduct';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 toast.configure();
 

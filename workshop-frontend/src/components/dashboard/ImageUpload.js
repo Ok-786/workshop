@@ -44,7 +44,7 @@ const ImageUpload = (props) => {
     };
 
     return (
-        <div className="form-control">
+        <div >
             <input
                 id={props.id}
                 ref={filePickerRef}
@@ -53,14 +53,34 @@ const ImageUpload = (props) => {
                 // accept=".jpg,.png,.jpg"
                 onChange={pickedHandler}
             />
-            <div className={`image-upload ${props.center && 'center'}`}>
-                <div className="image-upload__preview">
+
+            {!props.rounded && <div className={`image-upload ${props.center && 'center'}`}>
+                {previewUrl && <div className="image-upload__preview">
                     {previewUrl && <img src={previewUrl} alt="Preview" />}
-                    {!previewUrl && <Button color='primary' onClick={pickImageHandler}><b>PICK IMAGE</b></Button>}
-                </div>
+                </div>}
+                {!previewUrl && <Button color='primary' onClick={pickImageHandler}><b>PICK IMAGE</b></Button>}
+
                 {previewUrl && <Button color='primary' onClick={pickImageHandler}><b>CHANGE IMAGE</b></Button>}
-            </div>
-            {!isValid && <p>{props.errorText}</p>}
+
+
+                {!isValid && <p style={{ textAlign: 'center' }}>{props.errorText}</p>}
+            </div>}
+
+            {
+                props.rounded &&
+                <div>
+                    <div className="d-flex flex-column align-items-center text-center p-3 py-5">
+                        <img className="rounded-circle mt-5" width="180px" src={previewUrl} alt="Preview" />
+                        <span className="font-weight-bold">
+                            {!previewUrl && <Button color='primary' onClick={pickImageHandler}><b>PICK IMAGE</b></Button>}
+                            {previewUrl && <Button color='primary' onClick={pickImageHandler}><b>CHANGE IMAGE</b></Button>}
+                        </span>
+                    </div>
+
+
+                </div>
+            }
+
         </div>
     );
 }

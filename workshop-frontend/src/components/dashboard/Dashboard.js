@@ -68,8 +68,8 @@ const Dashboard = (props) => {
                                 {(display === 'Home') && <Home />}
                                 {(display === 'Add Product') && <AddProduct />}
                                 {(display === 'All Products') && <AllProducts />}
-                                {(display === 'Profile') && <Profile />}
                                 {(display === 'Add Staff') && <AddStaff />}
+                            {(display === 'Profile') && <Profile />}
                             </div>
                         </Grid>
                     </MuiThemeProvider>
@@ -84,8 +84,8 @@ const Dashboard = (props) => {
                         {(display === 'Add Product') && <AddProduct />}
                         {(display === 'All Products') && <AllProducts />}
                         {(display === 'Home') && <Home />}
-                        {(display === 'Profile') && <Profile />}
                         {(display === 'Add Staff') && <AddStaff />}
+                    {(display === 'Profile') && <Profile />}
                     </div>
                 </Fragment>
             )
