@@ -9,6 +9,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import SearchBar from "material-ui-search-bar";
 import image1 from '../../images/20.png';
+import Spinner from "../spinner/Spinner";
 
 
 
@@ -21,6 +22,7 @@ const useStyles = makeStyles({
 
 export default function AllProducts() {
     const [rows, setRows] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
         async function callApi() {
             const response = await fetch('http://localhost:8000/api/auth/products/',{
@@ -32,8 +34,9 @@ export default function AllProducts() {
             setRows(parseRes.products);
 
         }
-
+        setIsLoading(true);
         callApi();
+        setIsLoading(false);
     }, [])
 
     const [searched, setSearched] = useState("");
@@ -53,6 +56,7 @@ export default function AllProducts() {
 
     return (
         <Paper>
+            <Spinner loading={isLoading} />
             <SearchBar
                 value={searched}
                 onChange={(searchVal) => requestSearch(searchVal)}

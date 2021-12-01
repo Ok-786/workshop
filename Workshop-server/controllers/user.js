@@ -146,7 +146,9 @@ module.exports.addProduct = async (req, res) => {
     // }
 
     const { name, type, brand, retailprice, saleprice, quantity, model, modelYear, part_ID,  make,  description } = req.body;
-    console.log(req.file+'sdadadadadadadsadadad');
+    console.log(name+'sdadadadadadadsadadad');
+    if (!req.file) return res.send('Please upload a file');
+
     let product = new Product({
         name,
         type,

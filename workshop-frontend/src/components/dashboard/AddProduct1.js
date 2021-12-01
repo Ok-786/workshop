@@ -87,11 +87,12 @@ export default function AddProduct1() {
                 formData.append('make', values.make);
                 formData.append('file', image);
                 console.log(formData);
+                console.log(image);
 
                 const response = await fetch('http://localhost:8000/api/auth/products/create', {
                     method: 'POST',
                     headers: { token: localStorage.token },
-                    body: formData
+                    body:formData
                 });
 
                 const parseRes = await response.json();
@@ -256,7 +257,7 @@ export default function AddProduct1() {
                     error={formik.touched.modelYear && Boolean(formik.errors.modelYear)}
                     helperText={formik.touched.modelYear && formik.errors.modelYear}
                 />
-                <ImageUpload center id="image" onInput={setImage} errorText="Please provide an image." />
+                <ImageUpload center id="file" name="file" onInput={setImage} errorText="Please provide an image." />
                 {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DatePicker
                         label="Date of Birth"

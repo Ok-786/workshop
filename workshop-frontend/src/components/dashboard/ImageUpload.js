@@ -35,8 +35,8 @@ const ImageUpload = (props) => {
             fileIsValid = false;
         }
 
-        console.log(pickedFile)
-        props.onInput(props.id, pickedFile, fileIsValid);
+        console.log(pickedFile);
+        props.onInput(pickedFile, props.id, fileIsValid);
     }
 
     const pickImageHandler = () => {
@@ -56,9 +56,9 @@ const ImageUpload = (props) => {
             <div className={`image-upload ${props.center && 'center'}`}>
                 <div className="image-upload__preview">
                     {previewUrl && <img src={previewUrl} alt="Preview" />}
-                    {!previewUrl && <Button color='primary'  onClick={pickImageHandler}><b>PICK IMAGE</b></Button>}
+                    {!previewUrl && <Button color='primary' onClick={pickImageHandler}><b>PICK IMAGE</b></Button>}
                 </div>
-                {previewUrl && <Button color='primary'  onClick={pickImageHandler}><b>CHANGE IMAGE</b></Button>}
+                {previewUrl && <Button color='primary' onClick={pickImageHandler}><b>CHANGE IMAGE</b></Button>}
             </div>
             {!isValid && <p>{props.errorText}</p>}
         </div>
