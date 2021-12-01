@@ -145,7 +145,7 @@ module.exports.addProduct = async (req, res) => {
     //     return res.status(400).json(e);
     // }
 
-    const { name, type, brand, retailprice, saleprice, quantity, model, modelYear, part_ID,  make,  description } = req.body;
+    const { name, type, brand, retailprice, saleprice, quantity, model, modelYear, part_ID,  make,  details } = req.body;
     console.log(name+'sdadadadadadadsadadad');
     if (!req.file) return res.send('Please upload a file');
 
@@ -161,7 +161,7 @@ module.exports.addProduct = async (req, res) => {
         part_ID,
         make,
         image: req.file.path,
-        description
+        details
     })
     
     var user;
@@ -190,14 +190,14 @@ console.log(id)
     }
 
     // try {
-    //     const product = await pool.query("INSERT INTO products(admin_id, name, type, brand, regularPrice, salePrice, quantity, length, height, width, weight, color, quality, description) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *", [req.user.id, productName, type, brand, regularPrice, salePrice, quantity, length, height, width, weight, color, quality, description]);
+    //     const product = await pool.query("INSERT INTO products(admin_id, name, type, brand, regularPrice, salePrice, quantity, length, height, width, weight, color, quality, details) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *", [req.user.id, productName, type, brand, regularPrice, salePrice, quantity, length, height, width, weight, color, quality, details]);
 
     // } catch (err) {
     //     return res.status(500).json(err.message)
     // }
     return res.json("Product Added");
     // let product = new Product({
-    //     name, type, brand, retailprice, saleprice, quantity, model, modelYear, part_ID, weight, make, quality, description
+    //     name, type, brand, retailprice, saleprice, quantity, model, modelYear, part_ID, weight, make, quality, details
     // });
     // try {
     //     await product.save();
@@ -227,7 +227,7 @@ console.log(id)
     // }
 
     // // try {
-    // //     const product = await pool.query("INSERT INTO products(admin_id, name, type, brand, regularPrice, salePrice, quantity, length, height, width, weight, color, quality, description) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *", [req.user.id, productName, type, brand, regularPrice, salePrice, quantity, length, height, width, weight, color, quality, description]);
+    // //     const product = await pool.query("INSERT INTO products(admin_id, name, type, brand, regularPrice, salePrice, quantity, length, height, width, weight, color, quality, details) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *", [req.user.id, productName, type, brand, regularPrice, salePrice, quantity, length, height, width, weight, color, quality, details]);
 
     // // } catch (err) {
     // //     return res.status(500).json(err.message)
