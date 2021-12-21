@@ -10,11 +10,12 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { Box } from '@mui/system';
 import ImageUpload from './ImageUpload';
 import Spinner from '../spinner/Spinner';
+import { toast } from 'react-toastify';
 
 
 export default function AddProduct1() {
     const [isLoading, setIsLoading] = useState(false);
-    
+
     const handleFileUpload = (event) => {
         let reader = new FileReader();
         let file = event.target.files[0];
@@ -98,21 +99,32 @@ export default function AddProduct1() {
                 console.log(image);
 
                 setIsLoading(true);
-                
-                const response = await fetch('http://localhost:8000/api/auth/products/create', {
-                    method: 'POST',
-                    headers: { token: localStorage.token },
-                    body: formData
-                });
+                var response;
+                try {
+                    response = await fetch('http://localhost:8000/api/auth/products/create', {
+                        method: 'POST',
+                        headers: { token: localStorage.token },
+                        body: formData
+                    });
+                } catch (err) {
+                    console.log(err);
+                }
 
                 const parseRes = await response.json();
-                console.log(parseRes);
+
+                if(parseRes==="Product Added") {
+                    toast.success("New Product Added!");
+                } else {
+                    
+                    toast.error("Cannot Add Product!");
+                }
                 console.log('im in')
 
                 setIsLoading(false);
-                
-            formik.resetForm();
-                
+
+                formik.resetForm();
+
+
             } catch (error) {
                 console.log(error);
             }
@@ -121,7 +133,7 @@ export default function AddProduct1() {
 
     return (
         <div className={classes.form}>
-        <Spinner loading={isLoading} />
+            <Spinner loading={isLoading} />
             <h2 className={classes.centerDiv}>Add Product</h2>
             <form onSubmit={formik.handleSubmit}>
 

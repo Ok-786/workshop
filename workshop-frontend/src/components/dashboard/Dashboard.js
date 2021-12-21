@@ -9,6 +9,7 @@ import Home from './Home';
 import Profile from './Profile';
 import AddStaff from './AddStaff';
 import AllProducts from './AllProducts';
+import AllStaff from './AllStaff';
 // import dashboardStyles from './DashboardStyles';
 
 const Dashboard = (props) => {
@@ -47,6 +48,7 @@ const Dashboard = (props) => {
                     {(display === 'Home') && <Home />}
                     {(display === 'Add Product') && <div className={classes.centerDiv} ><AddProduct /></div>}
                     {(display === 'All Products') && <div className={classes.centerDiv} ><AllProducts /></div>}
+                    {(display === 'All Staff') && <div className={classes.centerDiv} ><AllStaff /></div>}
                     {(display === 'Profile') && <div className={classes.centerDiv} ><Profile /></div>}
                     {(display === 'Add Staff') && <div className={classes.centerDiv} ><AddStaff /></div>}
                 </Fragment>
@@ -68,6 +70,7 @@ const Dashboard = (props) => {
                                 {(display === 'Home') && <Home />}
                                 {(display === 'Add Product') && <AddProduct />}
                                 {(display === 'All Products') && <AllProducts />}
+                                {(display === 'All Staff') && <AllStaff />}
                                 {(display === 'Add Staff') && <AddStaff />}
                             {(display === 'Profile') && <Profile />}
                             </div>
@@ -83,6 +86,7 @@ const Dashboard = (props) => {
                         {(display === 'Store') && <StorePage />}
                         {(display === 'Add Product') && <AddProduct />}
                         {(display === 'All Products') && <AllProducts />}
+                        {(display === 'All Staff') && <AllStaff />}
                         {(display === 'Home') && <Home />}
                         {(display === 'Add Staff') && <AddStaff />}
                     {(display === 'Profile') && <Profile />}

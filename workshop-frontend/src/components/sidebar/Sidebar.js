@@ -64,7 +64,9 @@ const Sidebar = (props) => {
                                     <ListItemText primary={text} />
                                 </ListItem>
                                 :
-                                <ListItem button className={classes.dropDownPanel} key={text}>
+                                <ListItem button onClick={() => {
+                                    props.displayHandler("All Staff");
+                                }} className={classes.dropDownPanel} key={text}>
                                     <ListItemText primary={text} />
                                 </ListItem>
                         ))}

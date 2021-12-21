@@ -8,6 +8,7 @@ const User = require('../models/users');
 
 const nodemailer = require(`nodemailer`);
 const Product = require("../models/products");
+const Staff = require("../models/staff");
 require(`dotenv`).config();
 
 var transporter = nodemailer.createTransport({
@@ -145,8 +146,8 @@ module.exports.addProduct = async (req, res) => {
     //     return res.status(400).json(e);
     // }
 
-    const { name, type, brand, retailprice, saleprice, quantity, model, modelYear, part_ID,  make,  details } = req.body;
-    console.log(name+'sdadadadadadadsadadad');
+    const { name, type, brand, retailprice, saleprice, quantity, model, modelYear, part_ID, make, details } = req.body;
+    console.log(name + 'sdadadadadadadsadadadaaaaa');
     if (!req.file) return res.send('Please upload a file');
 
     let product = new Product({
@@ -163,10 +164,10 @@ module.exports.addProduct = async (req, res) => {
         image: req.file.path,
         details
     })
-    
+
     var user;
     var id = req.user.id;
-console.log(id)
+    console.log(id)
     try {
         user = await User.findById(id);
         console.log(user)
@@ -177,7 +178,7 @@ console.log(id)
     if (!user) {
         return res.status(500).json('User not foundaaa!')
     }
-    
+
     try {
         const sess = await mongoose.startSession();
         sess.startTransaction();
@@ -234,12 +235,154 @@ console.log(id)
     // // }
     // return res.json({ p: "Product Added" });
 };
+module.exports.addStaff = async (req, res) => {
+    // const { error } = validateProduct(req.body);
+    // if (error) {
+    //     var e = "";
+    //     error.details.forEach(element => {
+    //         e = e + " " + element.message;
+    //     });
+
+    //     return res.status(400).json(e);
+    // }
+
+    const {
+        firstName,
+        lastName,
+        email,
+        address,
+        operationalArea,
+        idNumber,
+        education,
+        country,
+        state,
+        experience,
+        skills,
+        additionalDetails,
+        phoneNumber,
+    } = req.body;
+
+    if (!req.file) return res.send('Please upload a file');
+
+    let staff = new Staff({
+        firstName,
+        lastName,
+        email,
+        address,
+        operationalArea,
+        idNumber,
+        education,
+        country,
+        state,
+        experience,
+        skills,
+        phoneNumber,
+        additionalDetails,
+        image: req.file.path
+    })
+
+    var user;
+    var id = req.user.id;
+    console.log(id)
+    try {
+        user = await User.findById(id);
+        // console.log(user)
+    } catch (error) {
+        return res.status(500).json(error.message)
+    }
+
+    if (!user) {
+        return res.status(500).json('User not foundaaa!')
+    }
+
+    console.log("aaaaaaaaaaaaaaaaaaaaab")
+    try {
+        console.log("aaaaaaaaaaaaaaaaaaaaac")
+        const sess = await mongoose.startSession();
+        sess.startTransaction();
+        await staff.save({ session: sess });
+        user.staff.push(staff);
+        console.log("aaaaaaaaaaaaaaaaaaaaa") //this push is the method of mongoose not array, it takes the id from the place and stores it in user
+        try {
+            await user.save({ session: sess });
+            await sess.commitTransaction();
+        } catch (err) {
+            console.log(err.message)
+        }
+    } catch (error) {
+        return res.status(500).json(error.message);
+    }
+
+    // try {
+    //     const product = await pool.query("INSERT INTO products(admin_id, name, type, brand, regularPrice, salePrice, quantity, length, height, width, weight, color, quality, details) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *", [req.user.id, productName, type, brand, regularPrice, salePrice, quantity, length, height, width, weight, color, quality, details]);
+
+    // } catch (err) {
+    //     return res.status(500).json(err.message)
+    // }
+    return res.json("Staff Created");
+    // let product = new Product({
+    //     name, type, brand, retailprice, saleprice, quantity, model, modelYear, part_ID, weight, make, quality, details
+    // });
+    // try {
+    //     await product.save();
+    // } catch (error) {
+    //     return res.status(500).json(error.message);
+    // }
+    // let user;
+    // try {
+    //     user = await User.findById(req.user.id);
+    // } catch (error) {
+    //     return res.status(500).json(error.message);
+    // }
+
+    // if (!user) {
+    //     return res.status(500).json(error.message);
+    // }
+
+    // try {
+    //     const sess = await mongoose.startSession();
+    //     sess.startTransaction();
+    //     await product.save({ session: sess });
+    //     user.products.push(product); //this push is the method of mongoose not array, it takes the id from the place and stores it in user
+    //     await user.save({ session: sess });
+    //     await sess.commitTransaction();
+    // } catch (error) {
+    //     return res.status(500).json(error.message);
+    // }
+
+    // // try {
+    // //     const product = await pool.query("INSERT INTO products(admin_id, name, type, brand, regularPrice, salePrice, quantity, length, height, width, weight, color, quality, details) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *", [req.user.id, productName, type, brand, regularPrice, salePrice, quantity, length, height, width, weight, color, quality, details]);
+
+    // // } catch (err) {
+    // //     return res.status(500).json(err.message)
+    // // }
+    // return res.json({ p: "Product Added" });
+};
 
 module.exports.getProducts = async (req, res) => {
     var products;
     try {
         userWithProducts = await User.findById(req.user.id).populate('products');
         return res.json({ products: userWithProducts.products.map(product => product.toObject({ getters: true })) });
+    } catch (err) {
+        return res.status(500).json(err.message);
+    }
+    // try {
+    //     const products = await pool.query("SELECT * FROM products");
+    //     return res.json(products.rows);
+    // } catch (err) {
+    //     return res.status(500).json(err.message);
+    // }
+};
+
+module.exports.getStaff = async (req, res) => {
+    console.log('llolollo')
+    var products;
+    try {
+        userWithStaff = await User.findById(req.user.id).populate('staff');
+        console.log({staff: userWithStaff.staff.map(staff => staff.toObject({ getters: true })) })
+        return res.json({ staff: userWithStaff.staff.map(staff => staff.toObject({ getters: true })) });
+        
     } catch (err) {
         return res.status(500).json(err.message);
     }

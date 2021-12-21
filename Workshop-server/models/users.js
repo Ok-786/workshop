@@ -31,6 +31,10 @@ const userSchema = mongoose.Schema({
     products: [{
         type: mongoose.Types.ObjectId,
         ref: 'products'
+    }],
+    staff: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'staff'
     }]
 });
 userSchema.plugin(uniqueValidator);

@@ -20,25 +20,24 @@ const useStyles = makeStyles({
 });
 
 
-export default function AllProducts() {
+export default function AllStaff() {
     const [rows, setRows] = useState([]);
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
         async function callApi() {
-            const response = await fetch('http://localhost:8000/api/auth/products/',{
+            const response = await fetch('http://localhost:8000/api/auth/staff/', {
                 headers: { token: localStorage.token }
             });
 
             const parseRes = await response.json();
-            console.log(parseRes.products);
-            setRows(parseRes.products);
-            setData(parseRes.products);
+            console.log(parseRes.staff)
+            setRows(parseRes.staff);
+            setData(parseRes.staff);
 
         }
         setIsLoading(true);
         callApi();
-        console.log(data);
         setIsLoading(false);
     }, [])
 
@@ -69,23 +68,23 @@ export default function AllProducts() {
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Products</TableCell>
-                            <TableCell align="left">Product Name</TableCell>
-                            <TableCell align="left">Quantity</TableCell>
-                            <TableCell align="left">Type</TableCell>
-                            <TableCell align="left">Price</TableCell>
+                            <TableCell>Users</TableCell>
+                            <TableCell align="left">Name</TableCell>
+                            <TableCell align="left">Mobile Number</TableCell>
+                            <TableCell align="left">CNIC</TableCell>
+                            <TableCell align="left">Area</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {rows.map((row) => (
-                            <TableRow key={row.name}>
+                            <TableRow key={row.firstName}>
                                 <TableCell component="th" scope="row">
-                                    <img id={`img${row.name}`} src={`http://localhost:8000/${row.image}`} alt={`pic of ${row.name}`} style={{ width: 60 }} />
+                                    <img id={`img${row.firstName}`} src={`http://localhost:8000/${row.image}`} alt={`pic of ${row.firstName}`} style={{ width: 60 }} />
                                 </TableCell>
-                                <TableCell align="left">{row.name}</TableCell>
-                                <TableCell align="left">{row.quantity}</TableCell>
-                                <TableCell align="left">{row.type}</TableCell>
-                                <TableCell align="left">{row.saleprice}</TableCell>
+                                <TableCell align="left">{row.firstName + " " + row.lastName}</TableCell>
+                                <TableCell align="left">{row.phoneNumber}</TableCell>
+                                <TableCell align="left">{row.idNumber}</TableCell>
+                                <TableCell align="left">{row.operationalArea}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

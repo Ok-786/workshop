@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 async function connect() {
     // const url = 'mongodb://cluster0.txsjl.mongodb.net:27017';
+    // const url = 'mongodb://localhost/workshop';
     
     const url = 'mongodb+srv://osama:ojRmRWCtVL1M1ahd@cluster0.txsjl.mongodb.net/workshop?authSource=admin&replicaSet=atlas-vbzzgl-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true';
     try {
