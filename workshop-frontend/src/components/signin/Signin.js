@@ -61,7 +61,7 @@ const Signin = (props) => {
     }
 
     return (
-        <Fragment>
+        <div data-testid = "Signin">
             <Grid container>
                 <Spinner loading={loading} />
                 <Grid item sm={5} md={8} className={classes.leftDiv}>
@@ -89,6 +89,7 @@ const Signin = (props) => {
                                 />
                                 <br />
                                 <TextField
+                                    data-testid = "password"
                                     type="password"
                                     name="password"
                                     size='small'
@@ -114,7 +115,7 @@ const Signin = (props) => {
                 </Grid>
             </Grid>
 
-        </Fragment >
+        </div >
     )
 };
 
