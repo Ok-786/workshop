@@ -28,7 +28,7 @@ const Routes = () => {
             resParse.user_id? setIsLoggedin(true): setIsLoggedin(false);
         }
         fetchApi();
-    }, );
+    }, []);
 
     const handleSignin = (loggedin) => {
         setIsLoggedin(loggedin);

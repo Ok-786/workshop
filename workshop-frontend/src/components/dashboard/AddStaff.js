@@ -56,19 +56,6 @@ export default function AddStaff() {
     const [image, setImage] = useState();
     const formik = useFormik({
         initialValues: {
-            firstName: '',
-            lastName: '',
-            email: '',
-            address: '',
-            operationalArea: '',
-            idNumber: '',
-            education: '',
-            country: '',
-            state: '',
-            experience: '',
-            skills: '',
-            additionalDetails: '',
-            phoneNumber: null
         },
         validationSchema: validationSchema,
         onSubmit: async (values) => {
@@ -115,7 +102,7 @@ export default function AddStaff() {
 
                 setIsLoading(false);
 
-                // formik.resetForm();
+                formik.resetForm();
 
             } catch (error) {
                 console.log(error);
