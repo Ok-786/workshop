@@ -176,17 +176,20 @@ module.exports.addProduct = async (req, res) => {
     }
 
     if (!user) {
+        
         return res.status(500).json('User not foundaaa!')
     }
-
+    
     try {
         const sess = await mongoose.startSession();
         sess.startTransaction();
         await product.save({ session: sess });
         user.products.push(product); //this push is the method of mongoose not array, it takes the id from the place and stores it in user
         await user.save({ session: sess });
+        console.log("im a not found")
         await sess.commitTransaction();
     } catch (error) {
+        console.log(error.message)
         return res.status(500).json(error.message);
     }
 
