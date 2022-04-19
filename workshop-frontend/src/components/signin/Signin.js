@@ -86,6 +86,7 @@ const Signin = (props) => {
                                     variant="outlined"
                                     value={email}
                                     onChange={onChangeHandler}
+                                    autoComplete='false'
                                 />
                                 <br />
                                 <TextField
@@ -99,6 +100,7 @@ const Signin = (props) => {
                                     variant="outlined"
                                     value={password}
                                     onChange={onChangeHandler}
+                                    autoComplete='false'
                                 />
                                 <div >
                                     <div className={classes.rememberMeLeft} ><FormControlLabel onClick={checkHandler} control={<Checkbox checked={checked} sx={{ color: pink[800], '&.Mui-checked': { color: pink[600], }, }} />} label="Remember me" /></div>

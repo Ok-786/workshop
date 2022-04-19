@@ -17,7 +17,7 @@ export default function AdminHome() {
                     <Featuredinfo />
                 </Grid>
                 <Grid container>
-                    <Grid item sm={12} xm={12} xl={6} lg={6} md={12}>
+                    <Grid item sm={12}  xm={12} xl={6} lg={6} md={12}>
                         <div style={{ justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
                             {<Chart />}
                         </div>
